@@ -1,14 +1,14 @@
 {
   "expo": {
     "name": "TrustFolioKids-mobile",
-    "slug": "TrustFolioKids-mobile",
+    "slug": "herman-steve-kengne-nzongang",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "trustfoliokidsmobile",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +17,10 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "static",
@@ -32,11 +35,25 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "TrustFolioKids a besoin d'accéder à vos photos pour charger une histoire manuscrite.",
+          "cameraPermission": "TrustFolioKids a besoin d'accéder à votre caméra pour photographier une histoire manuscrite."
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "71612ea8-38c4-4c95-bbd7-4f0131c0774c"
+      }
+    },
+    "owner": "herman1111s-team"
   }
 }
