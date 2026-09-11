@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TrendingUp, Trophy } from 'lucide-react-native';
 import { useState } from 'react';
@@ -76,7 +77,19 @@ export function Challenges() {
       >
         <Text className="text-white text-2xl mb-4 font-bold">Challenges & Rankings</Text>
 
-        <View style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} className="rounded-2xl p-4 flex-row items-center gap-3">
+        <BlurView
+          intensity={40}
+          tint="light"
+          style={{
+            borderRadius: 16,
+            padding: 16,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 12,
+            overflow: 'hidden',
+            backgroundColor: 'rgba(255,255,255,0.2)',
+          }}
+        >
           <View style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} className="w-16 h-16 rounded-full items-center justify-center">
             <Text style={{ fontSize: 28 }}>👧</Text>
           </View>
@@ -95,7 +108,7 @@ export function Challenges() {
             </Text>
             <Text className="text-xl text-white font-bold">2,590</Text>
           </View>
-        </View>
+        </BlurView>
       </LinearGradient>
 
       <View className="px-4 mb-6">

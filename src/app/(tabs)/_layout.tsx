@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BookOpen, Gamepad2, Home as HomeIcon, LucideIcon, Trophy, User } from 'lucide-react-native';
+import { BookOpen, Gamepad2, Home as HomeIcon, LucideIcon, User } from 'lucide-react-native';
 import { Text } from 'react-native';
 
 import { Brand } from '@/constants/theme';
@@ -28,11 +28,12 @@ export default function TabsLayout() {
         tabBarStyle: { backgroundColor: '#ffffff' },
       }}
     >
-      <Tabs.Screen name="home" options={makeTabOptions('Home', HomeIcon)} />
-      <Tabs.Screen name="stories" options={makeTabOptions('Stories', BookOpen)} />
-      <Tabs.Screen name="games" options={makeTabOptions('Games', Gamepad2)} />
-      <Tabs.Screen name="challenges" options={makeTabOptions('Challenges', Trophy)} />
-      <Tabs.Screen name="profile" options={makeTabOptions('Profile', User)} />
+      <Tabs.Screen name="home" options={makeTabOptions('Accueil', HomeIcon)} />
+      <Tabs.Screen name="stories" options={makeTabOptions('Contes', BookOpen)} />
+      <Tabs.Screen name="games" options={makeTabOptions('Jeux', Gamepad2)} />
+      <Tabs.Screen name="profile" options={makeTabOptions('Profil', User)} />
+      {/* L'onglet Défis/Challenges a été retiré conformément à la maquette Figma (4 onglets seulement) */}
+      <Tabs.Screen name="challenges" options={{ href: null }} />
     </Tabs>
   );
 }

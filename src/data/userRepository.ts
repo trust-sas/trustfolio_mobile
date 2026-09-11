@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { apiClient, isApiConfigured } from '@/data/apiClient';
+import { readJson, writeJson } from '@/data/storage';
+
 export const ONBOARDED_KEY = 'tfk:hasOnboarded';
 
 const PROFILE_KEY = 'tfk:profile';
@@ -38,8 +41,8 @@ export interface SupportRequest {
 
 export const defaultProfile: UserProfileData = {
   fullName: 'Amina K.',
-  school: 'Lagos Primary School',
-  grade: 'Grade 5',
+  school: 'École Primaire de Cocody',
+  grade: 'CM1',
 };
 
 export const defaultNotificationPreferences: NotificationPreferences = {
@@ -71,28 +74,6 @@ export interface UserRepository {
   setParentModeEnabled(enabled: boolean): Promise<void>;
   submitSupportRequest(request: SupportRequest): Promise<void>;
   clearSession(): Promise<void>;
-}
-
-async function readJson<T>(key: string, fallback: T): Promise<T> {
-  try {
-    const raw = await AsyncStorage.getItem(key);
-    if (!raw) return fallback;
-    const parsed = JSON.parse(raw);
-    if (typeof fallback === 'object' && fallback !== null && !Array.isArray(fallback)) {
-      return { ...fallback, ...parsed };
-    }
-    return parsed as T;
-  } catch {
-    return fallback;
-  }
-}
-
-async function writeJson(key: string, value: unknown): Promise<void> {
-  try {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // best-effort persistence, mirrors the rest of the app's AsyncStorage usage
-  }
 }
 
 class AsyncStorageUserRepository implements UserRepository {
@@ -142,4 +123,74 @@ class AsyncStorageUserRepository implements UserRepository {
   }
 }
 
-export const userRepository: UserRepository = new AsyncStorageUserRepository();
+/**
+ * REST contract this implementation expects from the backend (see
+ * .env.example / EXPO_PUBLIC_API_BASE_URL):
+ *   GET  /user/profile                     -> UserProfileData
+ *   PUT  /user/profile                     <- UserProfileData
+ *   GET  /user/notification-preferences    -> NotificationPreferences
+ *   PUT  /user/notification-preferences    <- NotificationPreferences
+ *   GET  /user/privacy-preferences         -> PrivacyPreferences
+ *   PUT  /user/privacy-preferences         <- PrivacyPreferences
+ *   GET  /user/parent-mode                 -> boolean
+ *   PUT  /user/parent-mode                 <- boolean
+ *   POST /user/support-requests            <- SupportRequest
+ *   POST /user/logout                      (best-effort; the "has onboarded"
+ *                                            flag itself always stays local —
+ *                                            it describes this device, not
+ *                                            backend-owned account data)
+ */
+class ApiUserRepository implements UserRepository {
+  getProfile() {
+    return apiClient.get<UserProfileData>('/user/profile');
+  }
+
+  saveProfile(profile: UserProfileData) {
+    return apiClient.put<void>('/user/profile', profile);
+  }
+
+  getNotificationPreferences() {
+    return apiClient.get<NotificationPreferences>('/user/notification-preferences');
+  }
+
+  saveNotificationPreferences(prefs: NotificationPreferences) {
+    return apiClient.put<void>('/user/notification-preferences', prefs);
+  }
+
+  getPrivacyPreferences() {
+    return apiClient.get<PrivacyPreferences>('/user/privacy-preferences');
+  }
+
+  savePrivacyPreferences(prefs: PrivacyPreferences) {
+    return apiClient.put<void>('/user/privacy-preferences', prefs);
+  }
+
+  getParentModeEnabled() {
+    return apiClient.get<boolean>('/user/parent-mode');
+  }
+
+  setParentModeEnabled(enabled: boolean) {
+    return apiClient.put<void>('/user/parent-mode', enabled);
+  }
+
+  submitSupportRequest(request: SupportRequest) {
+    return apiClient.post<void>('/user/support-requests', request);
+  }
+
+  async clearSession() {
+    try {
+      await apiClient.post<void>('/user/logout');
+    } catch {
+      // best-effort — still clear the local onboarding flag below
+    }
+    try {
+      await AsyncStorage.removeItem(ONBOARDED_KEY);
+    } catch {
+      // ignore
+    }
+  }
+}
+
+export const userRepository: UserRepository = isApiConfigured
+  ? new ApiUserRepository()
+  : new AsyncStorageUserRepository();

@@ -1,17 +1,74 @@
 import { Image } from 'expo-image';
+import { useEffect } from 'react';
 import { View, Text } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import Svg, { Circle, Pattern, Rect } from 'react-native-svg';
 
 import { Brand } from '@/constants/theme';
 
 const logo = require('@/assets/images/trustfoliokids-logo.png');
+// Ratio natif du PNG source (1020x428) pour préserver l'aspect au lieu de le figer.
+const LOGO_WIDTH = 320;
+const LOGO_HEIGHT = LOGO_WIDTH * (428 / 1020);
+
+function Dot({ color, delay }: { color: string; delay: number }) {
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    opacity.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(0.5, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) })
+        ),
+        -1,
+        true
+      )
+    );
+  }, [delay, opacity]);
+
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));
+
+  return (
+    <Animated.View
+      className="w-3 h-3 rounded-full"
+      style={[{ backgroundColor: color }, style]}
+    />
+  );
+}
 
 export function SplashScreen() {
+  const translateY = useSharedValue(0);
+
+  useEffect(() => {
+    translateY.value = withRepeat(
+      withSequence(
+        withTiming(-14, { duration: 500, easing: Easing.out(Easing.cubic) }),
+        withTiming(0, { duration: 500, easing: Easing.in(Easing.cubic) })
+      ),
+      -1,
+      false
+    );
+  }, [translateY]);
+
+  const logoStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
   return (
     <View className="flex-1 bg-white items-center justify-center p-8">
-      <View className="mb-8">
-        <Image source={logo} style={{ width: 320, height: 160 }} contentFit="contain" />
-      </View>
+      <Animated.View className="mb-8" style={logoStyle}>
+        <Image source={logo} style={{ width: LOGO_WIDTH, height: LOGO_HEIGHT }} contentFit="contain" />
+      </Animated.View>
 
       <Text className="text-xl text-gray-700 text-center mb-12 font-semibold">
         Read. Play. Create. Become an Author.
@@ -19,11 +76,7 @@ export function SplashScreen() {
 
       <View className="flex-row gap-2">
         {[Brand.blue, Brand.orange, Brand.rose].map((color, i) => (
-          <View
-            key={i}
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <Dot key={i} color={color} delay={i * 200} />
         ))}
       </View>
 

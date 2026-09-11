@@ -2,6 +2,7 @@ export interface Game {
   id: string;
   name: string;
   description: string;
+  subtitle: string;
   icon: string;
   bgColor: string;
   progress: number;
@@ -16,6 +17,7 @@ export const games: Game[] = [
     id: 'game-1',
     name: 'TrustTreasure',
     description: 'Word and vocabulary adventure game',
+    subtitle: 'Vocabulaire et orthographe',
     icon: '💎',
     bgColor: '#FFD700',
     progress: 75,
@@ -28,6 +30,7 @@ export const games: Game[] = [
     id: 'game-2',
     name: 'TrustBridge',
     description: 'Reading comprehension challenge',
+    subtitle: 'Compréhension de lecture',
     icon: '🌉',
     bgColor: '#0077C8',
     progress: 60,
@@ -40,6 +43,7 @@ export const games: Game[] = [
     id: 'game-3',
     name: 'TrustTree',
     description: 'Environmental learning game',
+    subtitle: 'Sciences de l\'environnement',
     icon: '🌳',
     bgColor: '#00C9D7',
     progress: 45,
@@ -52,6 +56,7 @@ export const games: Game[] = [
     id: 'game-4',
     name: 'TrustRoots',
     description: 'African culture discovery game',
+    subtitle: 'Culture africaine',
     icon: '🎭',
     bgColor: '#FF1493',
     progress: 30,
@@ -64,6 +69,7 @@ export const games: Game[] = [
     id: 'game-5',
     name: 'TrustBiz',
     description: 'Financial literacy simulator',
+    subtitle: 'Éducation financière',
     icon: '💰',
     bgColor: '#FF8C00',
     progress: 15,
@@ -71,18 +77,6 @@ export const games: Game[] = [
     stars: 67,
     level: 3,
     unlocked: true,
-  },
-  {
-    id: 'game-6',
-    name: 'Championships',
-    description: 'Competitive educational tournaments',
-    icon: '🏆',
-    bgColor: '#9333EA',
-    progress: 0,
-    score: 0,
-    stars: 0,
-    level: 0,
-    unlocked: false,
   },
 ];
 
@@ -96,18 +90,18 @@ export function gameHref(id: string) {
 
 export const quizQuestions = [
   {
-    question: "What does 'Courage' mean?",
-    answers: ['Being afraid', 'Being brave', 'Being fast', 'Being quiet'],
+    question: "Que signifie le mot « Courage » ?",
+    answers: ['Avoir peur', 'Être brave', 'Être rapide', 'Être silencieux'],
     correct: 1,
   },
   {
-    question: "Which word rhymes with 'cat'?",
-    answers: ['Dog', 'Hat', 'Fish', 'Bird'],
+    question: "Quel mot rime avec « chat » ?",
+    answers: ['Chien', 'Rat', 'Poisson', 'Oiseau'],
     correct: 1,
   },
   {
-    question: "What is a synonym for 'happy'?",
-    answers: ['Sad', 'Joyful', 'Angry', 'Tired'],
+    question: "Quel est le synonyme de « heureux » ?",
+    answers: ['Triste', 'Joyeux', 'En colère', 'Fatigué'],
     correct: 1,
   },
 ];

@@ -52,7 +52,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       <View className="flex-1 items-center justify-center px-8">
         <View
           className="w-48 h-48 rounded-full items-center justify-center mb-8"
-          style={{ backgroundColor: slide.bgColor }}
+          style={{
+            backgroundColor: slide.bgColor,
+            boxShadow: '0px 10px 20px rgba(0,0,0,0.25)',
+            elevation: 12,
+          }}
         >
           <Text style={{ fontSize: 80 }}>{slide.emoji}</Text>
         </View>

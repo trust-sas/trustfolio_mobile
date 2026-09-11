@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { Star, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
@@ -78,7 +79,18 @@ export function GamePlay({ game }: { game: Game }) {
 
       {gameStarted && !gameComplete && (
         <View className="px-4 mb-4">
-          <View style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} className="rounded-2xl p-4 flex-row justify-around">
+          <BlurView
+            intensity={40}
+            tint="light"
+            style={{
+              borderRadius: 16,
+              padding: 16,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              overflow: 'hidden',
+              backgroundColor: 'rgba(255,255,255,0.2)',
+            }}
+          >
             <View className="items-center">
               <View className="flex-row items-center gap-1 mb-1">
                 <Trophy size={16} color="#ffffff" />
@@ -91,7 +103,7 @@ export function GamePlay({ game }: { game: Game }) {
                 <Zap size={16} color="#ffffff" />
                 <Text className="text-2xl text-white font-bold">{timer}s</Text>
               </View>
-              <Text className="text-xs text-white">Time</Text>
+              <Text className="text-xs text-white">Temps</Text>
             </View>
             <View className="items-center">
               <View className="flex-row items-center gap-1 mb-1">
@@ -102,7 +114,7 @@ export function GamePlay({ game }: { game: Game }) {
               </View>
               <Text className="text-xs text-white">Question</Text>
             </View>
-          </View>
+          </BlurView>
         </View>
       )}
 
@@ -116,7 +128,7 @@ export function GamePlay({ game }: { game: Game }) {
             <Text className="text-white/90 text-lg mb-8 text-center">{game.description}</Text>
             <TouchableOpacity onPress={startGame} className="bg-white px-8 py-4 rounded-2xl">
               <Text style={{ color: game.bgColor }} className="text-lg font-bold">
-                Start Game
+                Commencer
               </Text>
             </TouchableOpacity>
           </View>
@@ -125,8 +137,8 @@ export function GamePlay({ game }: { game: Game }) {
             <Text style={{ fontSize: 60 }} className="mb-4">
               🎉
             </Text>
-            <Text className="text-2xl mb-2 font-bold">Game Complete!</Text>
-            <Text className="text-gray-600 mb-6">Great job! You earned:</Text>
+            <Text className="text-2xl mb-2 font-bold">Partie terminée !</Text>
+            <Text className="text-gray-600 mb-6">Bravo ! Tu as gagné :</Text>
 
             <View className="bg-gray-50 rounded-2xl p-6 mb-6 items-center w-full">
               <Text style={{ color: game.bgColor, fontSize: 44 }} className="mb-2 font-bold">
@@ -142,20 +154,20 @@ export function GamePlay({ game }: { game: Game }) {
               </View>
               <View className="flex-1 bg-orange-50 rounded-xl p-3 items-center">
                 <Text className="text-2xl mb-1">⭐</Text>
-                <Text className="text-xs text-gray-600">Star</Text>
+                <Text className="text-xs text-gray-600">Étoile</Text>
               </View>
               <View className="flex-1 bg-purple-50 rounded-xl p-3 items-center">
                 <Text className="text-2xl mb-1">🏆</Text>
-                <Text className="text-xs text-gray-600">Trophy</Text>
+                <Text className="text-xs text-gray-600">Trophée</Text>
               </View>
             </View>
 
             <View className="flex-row gap-3 w-full">
               <TouchableOpacity onPress={startGame} style={{ backgroundColor: game.bgColor }} className="flex-1 rounded-xl py-3 items-center">
-                <Text className="text-white font-semibold">Play Again</Text>
+                <Text className="text-white font-semibold">Rejouer</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => router.back()} className="flex-1 bg-gray-100 rounded-xl py-3 items-center">
-                <Text className="text-gray-700 font-semibold">Exit</Text>
+                <Text className="text-gray-700 font-semibold">Quitter</Text>
               </TouchableOpacity>
             </View>
           </View>
