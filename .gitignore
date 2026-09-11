@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+.claude
+SYNC_PLAN.md
 
 # Expo
 .expo/
@@ -31,6 +33,7 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
 
 # typescript
