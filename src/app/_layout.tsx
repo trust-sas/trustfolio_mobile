@@ -1,18 +1,27 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import '@/global.css';
+import { AppProvider } from '@/context/AppContext';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <AppProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(parent)" />
+        <Stack.Screen name="(enseignant)" />
+        <Stack.Screen name="(point-focal)" />
+        <Stack.Screen name="story/[id]" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="school/[id]" />
+        <Stack.Screen name="game/[id]" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="write" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="change-space" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="parent-upload" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="parent-dashboard" options={{ presentation: 'modal' }} />
+      </Stack>
+    </AppProvider>
   );
 }
