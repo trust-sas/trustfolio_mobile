@@ -1,10 +1,10 @@
 import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
 import { Star, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { Game, quizQuestions } from '@/data/games';
+import { goBack } from '@/utils/navigation';
 
 export function GamePlay({ game }: { game: Game }) {
   const [soundOn, setSoundOn] = useState(true);
@@ -60,7 +60,7 @@ export function GamePlay({ game }: { game: Game }) {
   return (
     <View style={{ backgroundColor: game.bgColor }} className="flex-1">
       <View className="p-4 flex-row items-center justify-between">
-        <TouchableOpacity onPress={() => router.back()} style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} className="p-2 rounded-xl">
+        <TouchableOpacity onPress={() => goBack('/(tabs)/home')} style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} className="p-2 rounded-xl">
           <X size={24} color="#ffffff" />
         </TouchableOpacity>
 
@@ -166,7 +166,7 @@ export function GamePlay({ game }: { game: Game }) {
               <TouchableOpacity onPress={startGame} style={{ backgroundColor: game.bgColor }} className="flex-1 rounded-xl py-3 items-center">
                 <Text className="text-white font-semibold">Rejouer</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.back()} className="flex-1 bg-gray-100 rounded-xl py-3 items-center">
+              <TouchableOpacity onPress={() => goBack('/(tabs)/home')} className="flex-1 bg-gray-100 rounded-xl py-3 items-center">
                 <Text className="text-gray-700 font-semibold">Quitter</Text>
               </TouchableOpacity>
             </View>

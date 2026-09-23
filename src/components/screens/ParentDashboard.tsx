@@ -5,6 +5,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import { Brand } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
+import { goBack } from '@/utils/navigation';
 
 const readingStats = { storiesRead: 24, timeSpent: '12h 45m', favoriteCategory: 'Adventure', streak: 7 };
 const gamesStats = { gamesPlayed: 18, totalScore: 2450, level: 15 };
@@ -15,13 +16,13 @@ export function ParentDashboard() {
 
   const handleBackToKidView = () => {
     setParentModeEnabled(false);
-    router.back();
+    goBack('/(tabs)/home');
   };
 
   return (
     <View className="flex-1 bg-white">
       <View className="px-4 py-4 border-b border-gray-200 flex-row items-center justify-between">
-        <TouchableOpacity onPress={() => router.back()} className="p-2">
+        <TouchableOpacity onPress={() => goBack('/(tabs)/home')} className="p-2">
           <X size={24} color="#000000" />
         </TouchableOpacity>
         <Text className="text-lg font-bold">Parent Dashboard</Text>

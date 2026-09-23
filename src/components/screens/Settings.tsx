@@ -1,4 +1,3 @@
-import { router } from 'expo-router';
 import { Bell, ChevronDown, ChevronLeft, HelpCircle, Info, Shield, User, X } from 'lucide-react-native';
 import { useState } from 'react';
 import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -7,6 +6,7 @@ import { Brand } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
 import { NotificationPreferences, ProfileVisibility, StorySharing } from '@/data/userRepository';
 import { showAlert } from '@/utils/alerts';
+import { goBack } from '@/utils/navigation';
 
 export type SettingsSection = 'main' | 'account' | 'notifications' | 'privacy' | 'help';
 
@@ -117,7 +117,7 @@ export function Settings({ initialSection = 'main' }: { initialSection?: Setting
             <ChevronLeft size={24} color="#000000" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={() => router.back()} className="p-2">
+          <TouchableOpacity onPress={() => goBack('/(tabs)/home')} className="p-2">
             <X size={24} color="#000000" />
           </TouchableOpacity>
         )}

@@ -1,10 +1,10 @@
-import { router } from 'expo-router';
 import { BookOpen, Heart, X } from 'lucide-react-native';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import { Brand } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
 import { storyFullContent, Story } from '@/data/stories';
+import { goBack } from '@/utils/navigation';
 
 export function StoryReader({ story }: { story: Story }) {
   const { likedStories, toggleLike } = useApp();
@@ -139,7 +139,7 @@ export function StoryReader({ story }: { story: Story }) {
 
         {/* Bouton Fermer */}
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => goBack('/(tabs)/home')}
           style={{
             flexDirection: 'row',
             alignItems: 'center',

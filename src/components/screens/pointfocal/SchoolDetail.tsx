@@ -1,4 +1,3 @@
-import { router } from 'expo-router';
 import { ChevronLeft, Phone, TrendingUp } from 'lucide-react-native';
 import { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -6,6 +5,7 @@ import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { Brand } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
 import { focalReferralFcfa, pipelineStages, stageLabel } from '@/data/pointFocal';
+import { goBack } from '@/utils/navigation';
 
 export function SchoolDetail({ schoolId }: { schoolId: string }) {
   const { schools, saveSchoolReport } = useApp();
@@ -33,7 +33,7 @@ export function SchoolDetail({ schoolId }: { schoolId: string }) {
   return (
     <View className="flex-1 bg-white">
       <View className="px-5 py-4 border-b border-gray-100 flex-row items-center">
-        <TouchableOpacity onPress={() => router.back()} className="p-1 mr-2">
+        <TouchableOpacity onPress={() => goBack('/(point-focal)')} className="p-1 mr-2">
           <ChevronLeft size={22} color="#111827" />
         </TouchableOpacity>
         <View className="flex-1">

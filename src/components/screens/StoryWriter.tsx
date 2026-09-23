@@ -1,9 +1,9 @@
-import { router } from 'expo-router';
 import { X } from 'lucide-react-native';
 import { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { Brand } from '@/constants/theme';
+import { goBack } from '@/utils/navigation';
 
 const categories = [
   { name: 'Courage', icon: '💪', color: Brand.blue },
@@ -25,7 +25,7 @@ export function StoryWriter() {
   const handleSubmit = () => {
     if (!canSubmit) return;
     setSubmitted(true);
-    setTimeout(() => router.back(), 2500);
+    setTimeout(() => goBack('/(tabs)/home'), 2500);
   };
 
   if (submitted) {
@@ -47,7 +47,7 @@ export function StoryWriter() {
   return (
     <View className="flex-1 bg-white">
       <View className="px-5 py-4 border-b border-gray-100 flex-row items-center justify-between">
-        <TouchableOpacity onPress={() => router.back()} className="p-1">
+        <TouchableOpacity onPress={() => goBack('/(tabs)/home')} className="p-1">
           <X size={22} color="#111827" />
         </TouchableOpacity>
         <Text style={{ fontSize: 16, fontWeight: '700', color: '#111827' }}>Écrire un conte</Text>

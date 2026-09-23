@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker';
-import { router } from 'expo-router';
 import { Camera, ChevronLeft, FileUp, Loader2, X } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -8,6 +7,7 @@ import { Brand } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
 import { simulateOCR } from '@/data/ocrMockData';
 import { parseExtractedText } from '@/utils/parseStoryText';
+import { goBack } from '@/utils/navigation';
 
 type Step = 'child' | 'upload' | 'processing' | 'review' | 'success';
 
@@ -86,7 +86,7 @@ export function ParentUploadFlow() {
       status: 'publie',
     });
     setStep('success');
-    setTimeout(() => router.back(), 2200);
+    setTimeout(() => goBack('/(parent)'), 2200);
   };
 
   return (
@@ -103,7 +103,7 @@ export function ParentUploadFlow() {
           <View style={{ width: 24 }} />
         )}
         <Text style={{ fontSize: 16, fontWeight: '700', color: '#111827' }}>Charger un conte</Text>
-        <TouchableOpacity onPress={() => router.back()} className="p-1">
+        <TouchableOpacity onPress={() => goBack('/(parent)')} className="p-1">
           <X size={22} color="#111827" />
         </TouchableOpacity>
       </View>
